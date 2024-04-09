@@ -83,7 +83,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/04/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9A/">论文精读123：</a>
+      <a class="p-name article-title" href="/2024/04/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9A/">论文精读：Prototypical Residual Networks for Anomaly Detection and Localization</a>
     </h1>
   
 
@@ -91,11 +91,23 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2023/papers/Zhang_Prototypical_Residual_Networks_for_Anomaly_Detection_and_Localization_CVPR_2023_paper.pdf">文章来源</a></p>
+<h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>1、异常十分罕见，难收集到可见的异常并且容易对少数的可见异常过拟和。<br>2、异常区域小，外观差异大，难以识别。</p>
+<h3 id="主要贡献："><a href="#主要贡献：" class="headerlink" title="主要贡献："></a>主要贡献：</h3><p>1、提出了一种新的用于异常检测和定位的原型残差网络(PRN)。PRN利用多尺度原型和多尺度自注意机制，学习多尺度特征图之间和每个尺度多尺度感受野内的残差表征。<br>2、提出了多种综合考虑可见和不可见外观差异的异常生成策略，以扩大和多样化异常。<br>3、在四个数据集上进行了大量的实验，结果表明我们的方法实现了新的SOTA异常检测性能，并且在异常定位性能上大大优于当前的SOTA。</p>
+<h3 id="模型框架："><a href="#模型框架：" class="headerlink" title="模型框架："></a>模型框架：</h3><p><img src="/../img/kuangjia1.png"></p>
+<h3 id="模组组件："><a href="#模组组件：" class="headerlink" title="模组组件："></a>模组组件：</h3><h4 id="1、Multi-scale-Prototypes："><a href="#1、Multi-scale-Prototypes：" class="headerlink" title="1、Multi-scale Prototypes："></a>1、Multi-scale Prototypes：</h4><h5 id="Prototype-Initialization："><a href="#Prototype-Initialization：" class="headerlink" title="Prototype Initialization："></a>Prototype Initialization：</h5><p>&emsp;&emsp;随机选择一部分正常样本进行初始化，在此基础上进行聚类确定下来每个簇的中心，在之后的迭代中聚类中心不再改变，这些聚类中心作为prototypes。<br>&emsp;&emsp;多尺度的prototypes体现将多个block的输出特征图都考虑了prototypes。</p>
+<h5 id="Residual-Representation："><a href="#Residual-Representation：" class="headerlink" title="Residual Representation："></a>Residual Representation：</h5><p>&emsp;&emsp;将样本在某个block的输出与最近的prototype相减得到残差表征。<br><br/><br><img src="/../img/prototype1.png"></p>
+<h4 id="2、Multi-scale-Fusion："><a href="#2、Multi-scale-Fusion：" class="headerlink" title="2、Multi-scale Fusion："></a>2、Multi-scale Fusion：</h4><p>&emsp;&emsp;将多个block输出的特征图融合，有利于多个block之间的信息交互。<br><img src="/../img/prototype2.png"><br>&emsp;&emsp;$f_{rj}$:Transfom function,如图：<br><img src="/../img/prototype3.png"><br>&emsp;&emsp;可以看到要保证输出维度一致，需要对不同的block的输出进行上采样和下采样。</p>
+<h4 id="3、Multi-size-Self-Attention-MSA"><a href="#3、Multi-size-Self-Attention-MSA" class="headerlink" title="3、Multi-size Self-Attention(MSA):"></a>3、Multi-size Self-Attention(MSA):</h4><p>&emsp;&emsp;MSA将$C_{i,j}^*$ 分割成不同大小的patch，其中$C_{i,j}^*$是将各个block的特征图和残差图分别融合再concatenated后得到的。<br><img src="/../img/prototype4.png"></p>
+<h4 id="4、Anomaly-Generation"><a href="#4、Anomaly-Generation" class="headerlink" title="4、Anomaly Generation:"></a>4、Anomaly Generation:</h4><h5 id="Extended-Anomaly：通过已知异常的异常区域与正常样本生成异常。"><a href="#Extended-Anomaly：通过已知异常的异常区域与正常样本生成异常。" class="headerlink" title="Extended Anomaly：通过已知异常的异常区域与正常样本生成异常。"></a>Extended Anomaly：通过已知异常的异常区域与正常样本生成异常。</h5><h5 id="Simulated-Anomaly：去仿造unseen的异常"><a href="#Simulated-Anomaly：去仿造unseen的异常" class="headerlink" title="Simulated Anomaly：去仿造unseen的异常"></a>Simulated Anomaly：去仿造unseen的异常</h5><p>&emsp;&emsp;Heterologous anomaly：异常部分由纹理数据集中(DTD dataset)随机抽取变换得到。<br>&emsp;&emsp;Homology anomaly：一场部分由增强(将图片分为几个patch，然后打乱patch的顺序)的正常样本得到。</p>
+<h4 id="5、Train"><a href="#5、Train" class="headerlink" title="5、Train:"></a>5、Train:</h4><p>$$\mathcal{L}<em>{total} &#x3D; Smooth</em>{\mathcal{L}1}(\mathcal{M}<em>{o},\mathcal{M}) + \lambda \mathcal{L}</em>{focal}(\mathcal{M}<em>{o},\mathcal{M})$$<br>&emsp;&emsp;其中$Smooth</em>{\mathcal{L}1}$使得在0处可微，在保持L1范数稀疏性的同时，使目标函数更加光滑，有利于训练的稳定;$\mathcal{L}_{focal}$解决损失函数中类别不平衡的问题。</p>
+<h4 id="6、Experiment："><a href="#6、Experiment：" class="headerlink" title="6、Experiment："></a>6、Experiment：</h4><h5 id="评价指标："><a href="#评价指标：" class="headerlink" title="评价指标："></a>评价指标：</h5><p>&emsp;&emsp;Image-AUROC<br>&emsp;&emsp;Pixel-AUROC<br>&emsp;&emsp;Per Region Overlap(PRO):平等地对待不同大小的异常区域。<br>&emsp;&emsp;Average Precision(AP):适用于高度不平衡的类别。</p>
+<h5 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h5><p><img src="/../img/prototype5.png"><br><img src="/../img/prototype6.png"><br>&emsp;&emsp;从实验中可以看到无监督的方法效果要好于有监督的方法，对此产生疑问。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/04/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9A/" data-id="cluqzolay0001d8vdb70t53l5" data-title="论文精读123：" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/04/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9A/" data-id="cluqzolay0001d8vdb70t53l5" data-title="论文精读：Prototypical Residual Networks for Anomaly Detection and Localization" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -189,7 +201,7 @@
       <ul>
         
           <li>
-            <a href="/2024/04/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9A/">论文精读123：</a>
+            <a href="/2024/04/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9A/">论文精读：Prototypical Residual Networks for Anomaly Detection and Localization</a>
           </li>
         
           <li>
