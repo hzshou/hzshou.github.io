@@ -1,1 +1,346 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/38b034bd.js"></script><link rel="stylesheet" href="/static/css/581e01a0.css"><meta name="generator" content="Hexo 7.1.1"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<!--
+***************  *      *     *
+      8          *    *       *
+      8          *  *         *
+      8          **           *
+      8          *  *         *
+      8          *    *       *
+      8          *      *     *
+      8          *        *   ***********  Theme By Kieran(http://go.kieran.top)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+  <title>论文精读：Prototypical Residual Networks for Anomaly Detection and Localization | Tuo&#39;s Blog</title>
+  <!-- Meta data -->
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content="Tuo's Blog">
+    <meta name="author" content="hz shou">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+
+    <!-- Favicon, (keep icon in root folder) -->
+    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
+
+    <link rel="alternate" href="/atom.xml" title="Tuo&#39;s Blog" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
+    
+    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
+    
+
+    <!--[if IE 8]>
+    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
+    <![endif]-->
+
+    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
+    <script src="/js/jquery-1.11.1.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+
+    <!-- Load these in the <head> for quicker IE8+ load times -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.min.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+
+  
+  
+  
+
+  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+</head>
+
+<!--
+<body class="post-template">
+-->
+<body id="index" class="lightnav animsition">
+
+      <!-- ============================ Off-canvas navigation =========================== -->
+
+    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
+        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
+            <img src="/img/close.png" alt="Close"/>
+        </div>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu">
+            <li><a href="/" class="animsition-link" title="Home">Home</a></li>
+            <li><a href="/archives" class="animsition-link" title="archive">archives</a></li>
+            <!-- Dropdown Menu -->
+			 
+            <li>
+                <a class="sb-toggle-submenu">Works<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                        <li><a href="/" target="_BLANK" class="animsition-link">AAA</a></li>
+                    
+                        <li><a href="/atom.xml" target="_BLANK" class="animsition-link">BBB</a></li>
+                    
+                </ul>
+            </li>
+            
+            
+            
+            <li>
+                <a class="sb-toggle-submenu">Links<span class="sb-caret"></span></a>
+                <ul class="sb-submenu">
+                    
+                    <li><a target="_blank" rel="noopener" href="http://go.kieran.top/" class="animsition-link">Kieran</a></li>
+                    
+                    <li><a target="_blank" rel="noopener" href="http://domain.com/" class="animsition-link">Name</a></li>
+                    
+                </ul>
+            </li>
+            
+        </ul>
+        <!-- Lists in Slidebars -->
+        <ul class="sb-menu secondary">
+            
+            <li><a href="/about.html" class="animsition-link" title="about">About</a></li>
+            <li><a href="/atom.xml" class="animsition-link" title="rss">RSS</a></li>
+        </ul>
+    </div>
+    
+    <!-- ============================ END Off-canvas navigation =========================== -->
+
+    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+
+    <div id="sb-site">
+        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+        <div id="navigation" class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <!-- Nav logo -->
+                    <div class="logo">
+                        <a href="/" title="Logo" class="animsition-link">
+                         <img src="/img/logo.png" alt="Logo" width="35px;"/> 
+                        </a>
+                    </div>
+                    <!-- // Nav logo -->
+                    <!-- Info-bar -->
+                    <nav>
+                        <ul class="nav">
+                            <li><a href="/" class="animsition-link">Tuo's Blog</a></li>
+                            <li class="nolink"><span>Always </span>Creative.</li>
+                            
+                            <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a></li>
+                            
+                            
+                            <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a></li>
+                            
+                            
+                            <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a></li>
+                            
+                            
+                            <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a></li>
+                            
+                            
+                            <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a></li>
+                            
+                            <li class="nolink"><span>Welcome!</span></li>
+                        </ul>
+                    </nav>
+                    <!--// Info-bar -->
+                </div>
+                <!-- // .container -->
+                <div class="learnmore sb-toggle-right">More</div>
+                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar before"></span>
+                <span class="icon-bar main"></span>
+                <span class="icon-bar after"></span>
+                </button>
+            </div>
+            <!-- // .navbar-inner -->
+        </div>
+
+        <!-- ============================ Header & Logo bar =========================== -->
+
+
+      
+<section id="intro">
+    <div class="container">
+        <div class="row col-md-offset-2">
+            <div class="col-md-8">
+    			<span class="post-meta">
+      <time datetime="2024-04-08T12:45:48.000Z" itemprop="datePublished">
+          2024-04-08
+      </time>
+    
+</span>
+                <h1>论文精读：Prototypical Residual Networks for Anomaly Detection and Localization</h1>
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+      		<p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2023/papers/Zhang_Prototypical_Residual_Networks_for_Anomaly_Detection_and_Localization_CVPR_2023_paper.pdf">文章来源</a></p>
+<h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>1、异常十分罕见，难收集到可见的异常并且容易对少数的可见异常过拟和。<br>2、异常区域小，外观差异大，难以识别。</p>
+<h3 id="主要贡献："><a href="#主要贡献：" class="headerlink" title="主要贡献："></a>主要贡献：</h3><p>1、提出了一种新的用于异常检测和定位的原型残差网络(PRN)。PRN利用多尺度原型和多尺度自注意机制，学习多尺度特征图之间和每个尺度多尺度感受野内的残差表征。<br>2、提出了多种综合考虑可见和不可见外观差异的异常生成策略，以扩大和多样化异常。<br>3、在四个数据集上进行了大量的实验，结果表明我们的方法实现了新的SOTA异常检测性能，并且在异常定位性能上大大优于当前的SOTA。</p>
+<h3 id="模型框架："><a href="#模型框架：" class="headerlink" title="模型框架："></a>模型框架：</h3><p><img src="/../img/kuangjia1.png"></p>
+<h3 id="模组组件："><a href="#模组组件：" class="headerlink" title="模组组件："></a>模组组件：</h3><h4 id="1、Multi-scale-Prototypes："><a href="#1、Multi-scale-Prototypes：" class="headerlink" title="1、Multi-scale Prototypes："></a>1、Multi-scale Prototypes：</h4><h5 id="Prototype-Initialization："><a href="#Prototype-Initialization：" class="headerlink" title="Prototype Initialization："></a>Prototype Initialization：</h5><p>&emsp;&emsp;随机选择一部分正常样本进行初始化，在此基础上进行聚类确定下来每个簇的中心，在之后的迭代中聚类中心不再改变，这些聚类中心作为prototypes。<br>&emsp;&emsp;多尺度的prototypes体现将多个block的输出特征图都考虑了prototypes。</p>
+<h5 id="Residual-Representation："><a href="#Residual-Representation：" class="headerlink" title="Residual Representation："></a>Residual Representation：</h5><p>&emsp;&emsp;将样本在某个block的输出与最近的prototype相减得到残差表征。<br><br/><br><img src="/../img/prototype1.png"></p>
+<h4 id="2、Multi-scale-Fusion："><a href="#2、Multi-scale-Fusion：" class="headerlink" title="2、Multi-scale Fusion："></a>2、Multi-scale Fusion：</h4><p>&emsp;&emsp;将多个block输出的特征图融合，有利于多个block之间的信息交互。<br><img src="/../img/prototype2.png"><br>&emsp;&emsp; $f_{rj}$ :Transfom function,如图：<br><img src="/../img/prototype3.png"><br>&emsp;&emsp;可以看到要保证输出维度一致，需要对不同的block的输出进行上采样和下采样。</p>
+<h4 id="3、Multi-size-Self-Attention-MSA"><a href="#3、Multi-size-Self-Attention-MSA" class="headerlink" title="3、Multi-size Self-Attention(MSA):"></a>3、Multi-size Self-Attention(MSA):</h4><p>&emsp;&emsp;MSA将$C_{i,j}^*$ 分割成不同大小的patch，其中$C_{i,j}^*$是将各个block的特征图和残差图分别融合再concatenated后得到的。<br><img src="/../img/prototype4.png"></p>
+<h4 id="4、Anomaly-Generation"><a href="#4、Anomaly-Generation" class="headerlink" title="4、Anomaly Generation:"></a>4、Anomaly Generation:</h4><h5 id="Extended-Anomaly：通过已知异常的异常区域与正常样本生成异常。"><a href="#Extended-Anomaly：通过已知异常的异常区域与正常样本生成异常。" class="headerlink" title="Extended Anomaly：通过已知异常的异常区域与正常样本生成异常。"></a>Extended Anomaly：通过已知异常的异常区域与正常样本生成异常。</h5><h5 id="Simulated-Anomaly：去仿造unseen的异常"><a href="#Simulated-Anomaly：去仿造unseen的异常" class="headerlink" title="Simulated Anomaly：去仿造unseen的异常"></a>Simulated Anomaly：去仿造unseen的异常</h5><p>&emsp;&emsp;Heterologous anomaly：异常部分由纹理数据集中(DTD dataset)随机抽取变换得到。<br>&emsp;&emsp;Homology anomaly：一场部分由增强(将图片分为几个patch，然后打乱patch的顺序)的正常样本得到。</p>
+<h4 id="5、Train"><a href="#5、Train" class="headerlink" title="5、Train:"></a>5、Train:</h4><p>$$<br>\mathcal{L}<em>{total} &#x3D; Smooth</em>{\mathcal{L}1}(\mathcal{M}<em>{o},\mathcal{M}) + \lambda \mathcal{L}</em>{focal}(\mathcal{M}_{o},\mathcal{M})<br>$$</p>
+<p>&emsp;&emsp;其中 $Smooth_{\mathcal{L}1}$ 使得在0处可微，在保持L1范数稀疏性的同时，使目标函数更加光滑，有利于训练的稳定;$\mathcal{L}_{focal}$解决损失函数中类别不平衡的问题。</p>
+<h4 id="6、Experiment："><a href="#6、Experiment：" class="headerlink" title="6、Experiment："></a>6、Experiment：</h4><h5 id="评价指标："><a href="#评价指标：" class="headerlink" title="评价指标："></a>评价指标：</h5><p>&emsp;&emsp;Image-AUROC<br>&emsp;&emsp;Pixel-AUROC<br>&emsp;&emsp;Per Region Overlap(PRO):平等地对待不同大小的异常区域。<br>&emsp;&emsp;Average Precision(AP):适用于高度不平衡的类别。</p>
+<h5 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a>实验结果：</h5><p><img src="/../img/prototype5.png"><br><img src="/../img/prototype6.png"><br>&emsp;&emsp;从实验中可以看到无监督的方法效果要好于有监督的方法，对此产生疑问。</p>
+
+            <div class="clearfix"></div>
+            <hr class="nogutter">
+        </div>
+        <nav class="m-pagination col-md-8 col-md-offset-2 col-sm-24" role="pagination">
+    
+    <a class="pull-left" href="/2024/04/09/%E5%88%9B%E5%BB%BA%E6%84%9F%E6%82%9F/" style="float: left;">
+        ← 创建感悟
+    </a>
+    
+    
+    <a class="pull-right" href="/2024/04/08/hello-world/">
+        Hello World →
+    </a>
+    
+</nav>
+
+        <div class="col-md-8 col-md-offset-2 col-sm-24"><script type="text/javascript">
+  /**
+   * 搜狐畅言
+   */
+
+  /*
+  document.write('<div id="SOHUCS" sid="' + window.location.pathname.slice(1) + '" ></div>');
+
+  window.onload = function () {
+    (function () {
+      var appid = 'cytXXXX';
+      var conf = 'prod_xxxxxxxxxxxxxxxxx';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      var loadJs = function (d, a, id) {
+        var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+        var b = document.createElement("script");
+        b.setAttribute("type", "text/javascript");
+        b.setAttribute("charset", "UTF-8");
+        b.setAttribute("src", d);
+        if (id) {
+          b.setAttribute("id", id);
+        }
+        if (typeof a === "function") {
+          if (window.attachEvent) {
+            b.onreadystatechange = function () {
+              var e = b.readyState;
+              if (e === "loaded" || e === "complete") {
+                b.onreadystatechange = null;
+                a()
+              }
+            }
+          } else {
+            b.onload = a
+          }
+        }
+        c.appendChild(b)
+      };
+
+      loadJs("https://changyan.sohu.com/upload/changyan.js", function () {
+        window.changyan.api.config({
+          appid: appid,
+          conf: conf
+        })
+      });
+    })();
+  }
+  */
+
+</script>
+</div>
+    </div>
+</section>
+
+
+      
+<!-- ============================ Footer =========================== -->
+
+<footer>
+    <div class="container">
+            <div class="copy">
+                <p>
+                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By hz shou. All Rights Reserved.
+                </p>
+                <p>Theme By <a target="_blank" rel="noopener" href="//go.kieran.top" style="color: #767D84">Kieran</a></p>
+            </div>
+            <div class="social">
+                <ul>
+                    
+                    <li><a href="https://github.com/" title="Github" target="_blank"><i class="icon-github"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://twitter.com/" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="icon-facebook"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="https://google.com/" title="Google-Plus" target="_blank"><i class="icon-google-plus"></i></a>&nbsp;</li>
+                    
+                    
+                    <li><a href="http://weibo.com/" title="Sina-Weibo" target="_blank"><i class="icon-sina-weibo"></i></a>&nbsp;</li>
+                    
+                </ul>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+</footer>
+
+<!-- ============================ END Footer =========================== -->
+      <!-- Load our scripts -->
+<!-- Resizable 'on-demand' full-height hero -->
+<script type="text/javascript">
+    var resizeHero = function () {
+        var hero = $(".cover,.heightblock"),
+            window1 = $(window);
+        hero.css({
+            "height": window1.height()
+        });
+    };
+
+    resizeHero();
+
+    $(window).resize(function () {
+        resizeHero();
+    });
+</script>
+<script src="/js/plugins.min.js"></script><!-- Bootstrap core and concatenated plugins always load here -->
+<script src="/js/scripts.js"></script><!-- Theme scripts -->
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$('#intro').find('img').each(function(){
+  var alt = this.alt;
+
+  if (alt){
+    $(this).after('<span class="caption" style="display:none">' + alt + '</span>');
+  }
+
+  $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox" rel="gallery" />');
+});
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+      
+</body>
+</html>
